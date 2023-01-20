@@ -1,0 +1,196 @@
+function App() {
+  return (
+   <div>
+    {header}
+    {header}  
+    {main}
+    {footer}
+   </div>
+  );
+}
+const headerStyle = {
+  border:'2px solid orange',
+  backgroundColor:"green"
+}
+const mainStyle = {
+  border:'2px solid orange',
+  backgroundColor:"blue"
+}
+const welcome = "Welcome to 30 days of react"
+const title = "react classes"
+const author = "Adfar Rasheed"
+const header = (
+  <header style={headerStyle}>
+    <h1>{welcome}</h1>
+    <h1>{title}</h1>
+    <h3>{author}</h3>
+  </header>
+)
+const main = (
+   <main style={mainStyle}>
+    <p>Anything</p>
+    <h1>This is my main section</h1>
+    <small>Nothing so serious</small>
+   </main>
+)
+const footer = (
+  <footer style={{border:'2px solid orange',backgroundColor:"green"}}>
+    <p>Copyright reserved by Adfar rasheed</p>
+  </footer>
+)
+
+export default App;
+
+
+
+
+import About from "./components/About"
+import Header from "./components/Header"
+function App(){
+  let age =25
+  let skills = ["html","css","js"]
+  const data = {
+    welcome : "welcome to react classes",
+    title : "Starting react",
+    Author : "Adfar Rashid"
+  }
+  return (
+    <div>
+      <About name="Adfar" age={age} skills={skills} data = {data}/>
+      
+    
+      <Header name="Header" />
+      
+    </div>
+  )
+}
+export default App
+
+
+
+import React from 'react'
+function Elem1(){
+  return <h1>Hi i am element 1</h1>
+}
+function Elem2(){
+  return <h1>Hi i am element 2</h1>
+  
+}
+function Realoutput(props){
+   const isoutput = props.isoutput
+   if(isoutput){
+    return <Elem1/>
+   }
+   else{
+    return <Elem2/>
+   }
+}
+export default function App() {
+  return (
+    <div>
+       <Realoutput isoutput={true}/>
+    </div>
+  )
+}
+
+
+
+
+import React, { Component } from 'react'
+
+export default class App extends Component {
+ constructor(){
+  super()
+  this.state = {
+    count : 0,
+  }
+ }
+ addOne =() => {
+  this.setState({count:this.state.count + 1})
+ }
+ addten = ()=>{
+  this.setState({count:this.state.count + 10})
+ 
+ }
+ minusOne =() => {
+  this.setState({count:this.state.count - 1})
+ }
+ minusten = ()=>{
+  this.setState({count:this.state.count - 10})
+ 
+ }
+  render() {
+    return (
+      <div>
+        <h1>{this.state.count}</h1>
+        <button onClick = {this.addOne}>Add</button>
+        <button onClick = {this.addten}>Addby10</button>
+        <button onClick = {this.minusOne}>minus</button>
+        <button onClick = {this.minusten}>minusby10</button>
+      </div>
+    )
+  }
+}
+
+
+
+//TEXT UTILS APP4
+
+
+import React, { useState } from 'react'
+
+export default function Message() {
+    const [text,setText] = useState("")
+    function onChange(e){
+        setText(e.target.value)
+    }
+    const onUpper =()=>{
+        let upper = text.toUpperCase()
+        setText(upper)
+    }
+    const onLower = ()=>{
+        let lower = text.toLowerCase()
+        setText(lower)
+    }
+    const onClear = ()=>{
+        setText("")
+    } 
+    const onCopy =()=>{
+        let Text = document.getElementById("box")
+        console.log(Text)
+        Text.select()
+        navigator.clipboard.writeText(Text.value)
+    }
+  return (
+    <div className='container my-3'>
+       
+<div  className="mb-3">
+  <label htmlFor="exampleFormControlTextarea1" className="form-label">Anything Textbox</label>
+  <textarea value={text}  className="form-control" 
+  id="box" rows="9" onChange={(e)=>{onChange(e)}}></textarea>
+</div>
+<button type="button" className="btn btn-primary" onClick={onUpper}>UpperCase</button>
+<button type="button" className="btn btn-secondary" onClick={onLower}>LowerCase</button>
+<button type="button" className="btn btn-success" onClick={onClear}>Clear</button>
+<button  type="button" className="btn btn-danger" onClick={onCopy}>Copy</button>
+    <div>
+        <h1>Your Text Summary</h1>
+        <p>{text.split(" ").length} words and {text.length} letters</p>
+    </div>
+    </div>
+  )
+}
+
+
+import React from 'react'
+import About from './text/About'
+import Message from './text/Message'
+
+export default function App() {
+  return (
+    <div>
+      {/* <About/> */}
+      <Message/>
+    </div>
+  )
+}
