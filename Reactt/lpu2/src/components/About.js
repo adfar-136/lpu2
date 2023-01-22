@@ -1,7 +1,9 @@
 function About(props){
     
     return (
-        <div>ADfarrrrrrr
+        <div>
+            {props.skills.map((x)=> <li>{x}</li>)}
+
             <h1>{props.name} {props.age} </h1>
             {props.skills.map((x)=> <li>{x}</li>)}
             <div>
