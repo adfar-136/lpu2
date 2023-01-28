@@ -432,3 +432,260 @@ export default class App extends Component {
     )
   }
 }
+
+
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+
+export default function App() {
+  const [count,setcount]= useState(0)
+  const [number,setNumber] = useState(0)
+  // useEffect(()=>{
+  //   console.log("effect called")
+  // },[])
+  useEffect(()=>{
+    console.log("effect called")
+  },[count])
+  return (
+    <div>
+      <h1>{count}</h1>
+      <h1>{number}</h1>
+      <button onClick={()=>{setcount(count+1)}}>click me</button>
+      <button onClick={()=>{setNumber(number+1)}}>click me</button>
+    </div>
+  )
+}
+
+
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+
+export default function App() {
+  const [count,setcount]= useState(0)
+  const [number,setNumber] = useState(0)
+  // useEffect(()=>{
+  //   console.log("effect called")
+  // },[])
+  
+  
+  //  useEffect(()=>{
+  //   console.log("1")
+  //   const eventhandler = ()=> console.log("Hi Adfar")
+  //   document.addEventListener("click",eventhandler)
+  //   return ()=>{
+  //     console.log("2")
+  //     document.removeEventListener("click",eventhandler)
+  //   }
+  //  })
+  useEffect(()=>{
+   const interval =  setInterval(()=>{
+      console.log("Hello Adfar");
+    },3000)
+    return ()=>{
+      clearInterval(interval)
+    }
+  },[count])
+  return (
+    <div>
+      <h1>{count}</h1>
+      <h1>{number}</h1>
+      <button onClick={()=>{setcount(count+1)}}>click me</button>
+      <button onClick={()=>{setNumber(number+1)}}>click me</button>
+    </div>
+  )
+}
+
+
+import React from 'react'
+import { useReducer } from 'react'
+const counterReducer = (state,action)=>{
+  console.log("State :", state)
+  console.log("action :", action)
+  // if(action.type === "adfar"){
+  //   return {count:state.count +1}
+  // } else if(action.type==="Aman"){
+  //   return {count:state.count +2 }
+  // }
+  switch(action){
+    case "add":
+      return state + 1;
+    case "sub":
+      return state - 1;
+    case "reset":
+      return 0;
+    default:
+      throw new Error("unexpected Action")
+  }
+}
+export default function App() {
+  // const [count,setcount]= useState(0)
+  const [state,dispatch] = useReducer(counterReducer,0)
+  //useReducer hook
+  return (
+    <div>
+      <h1>{state}</h1>
+      {/* <button onClick={()=>{dispatch({type:"adfar"})}}>Change State</button>
+      <button onClick={()=>{dispatch({type:"Aman"})}}>Change two</button> */}
+      <button onClick={()=>{dispatch("add")}}>Add</button>
+      <button onClick={()=>{dispatch("sub")}}>Subtract</button><button onClick={()=>{dispatch({type:"adfar"})}}>Change State</button>
+      <button onClick={()=>{dispatch("reset")}}>reset</button>
+    </div>
+  )
+}
+
+import React from 'react'
+import { createContext } from 'react'
+import CompA from './components/context/CompA'
+const FirstName = createContext()
+const LastName = createContext()
+export default function App() {
+  return (
+    <div>
+      <FirstName.Provider value={"Adfar"}>
+        <LastName.Provider value={"rasheed"}>
+         <CompA/>   
+        </LastName.Provider>
+      </FirstName.Provider>
+    </div>
+  )
+}
+export {FirstName,LastName}
+
+
+import React from 'react'
+import { useMemo } from 'react'
+import { useState } from 'react'
+
+export default function App() {
+  const [counterOne, setCounterOne] = useState(0)
+  const [counterTwo, setCounterTwo] = useState(0)
+  const incrementOne =()=>{
+    setCounterOne(counterOne+1)
+  }
+  const isEven =useMemo(()=>{
+    let i=0;
+    while(i<2000000000) i++
+    return counterOne%2 === 0
+  },[counterOne])
+  const incrementTwo =()=>{
+    setCounterTwo(counterTwo+1)
+  }
+  return (
+    <div>
+      <button onClick={incrementOne}>CounterOne :{counterOne}</button> <br /><br />
+      {/* <h1>{isEven()?"Even":"Odd"}</h1> */}
+      <h1>{isEven?"Even":"Odd"}</h1>
+      <button onClick={incrementTwo}>CounterTwo :{counterTwo}</button>
+    </div>
+  )
+}
+
+import React, { useCallback } from 'react'
+import { useState } from 'react'
+const x = new Set()
+export default function App() {
+  const [count,setCount] = useState(0)
+  const [number, setnumber] = useState(0)
+  const incrementCount =useCallback(()=>{
+    setCount(count + 1)
+  },[count])
+  const decrementCount =useCallback(()=>{
+    setCount(count - 1)
+  },[count])
+  const incrementNumber =useCallback(()=>{
+    setnumber(number + 1)
+  },[number])
+  x.add(incrementCount)
+  x.add(decrementCount)
+  x.add(incrementNumber)
+  alert(x.size)
+  return (
+    <div>
+      <button onClick={incrementCount}>Increase Counter</button>
+      <button onClick={decrementCount}>Decrease Counter</button>
+      <button onClick={incrementNumber}>Increase Number</button>
+    </div>
+  )
+}
+
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import About from './Routes/About'
+import Adfar from './Routes/Adfar'
+import Contact from './Routes/Contact'
+import Home from './Routes/Home'
+import MainHome from './Routes/MainHome'
+import "./App.css"
+import Employee from './Routes/Employee'
+import Error from './Routes/Error'
+import Employeedetails from './Routes/Employeedetails'
+import Search from './Routes/Search'
+import List from './Routes/List'
+export default function App() {
+  return (
+    <BrowserRouter>
+       <Routes>
+        {/* <Route path='/' element={<div>Home page</div>}/>
+        <Route path = '/about' element={<div>About Page</div>}/>
+        <Route path='/contact' element ={<div>Contact Page</div>}/>
+        <Route path='/adfar' element={<div>Adfar's Page</div>}/> */}
+         <Route path='/' element={<MainHome/>}>
+            <Route index element={<Home/>}/>
+            <Route path = 'about' element={<About/>}/>
+            <Route path='/contact' element ={<Contact/>}>
+              <Route path='search' element={<Search/>}/>
+              <Route path='list' element={<List/>}/>
+            </Route>
+            <Route path='contact/search' element={<Search/>}/>
+            <Route path='contact/list' element={<List/>}/>
+            <Route path='adfar' element={<div><Adfar/></div>}/>
+            <Route path="employee" element ={<Employee/>}/>
+            <Route path="employee/:Eid" element={<Employeedetails/>}/>
+            <Route path='*' element={<Error/>}/>
+     </Route>
+       </Routes>
+    </BrowserRouter>
+  )
+}
+
+
+import React from 'react'
+import { useState } from 'react'
+
+export default function App() {
+  const [name,setName] = useState('')
+  const [password,setPassword] = useState('')
+  const handle=()=>{
+    localStorage.setItem('Name',name)
+    localStorage.setItem('Password',password)
+  }
+  const remove=()=>{
+    localStorage.removeItem('Name')
+    localStorage.removeItem('Password')
+  }
+  return (
+    <div>
+      <h1>Enter your name : </h1>
+      <input type="text" placeholder='Name' value={name} onChange={(e)=>{setName(e.target.value)}}/>
+      <h1>Password of the user : </h1>
+      <input type="password" placeholder='Password' value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+      <button onClick={handle}>Done</button>
+      <div>
+         {localStorage.getItem('Name') && (
+          <div>
+            Name  : <p>{localStorage.getItem('Name')}</p>
+          </div>
+         )}  
+         {localStorage.getItem('Password') && (
+          <div>
+            Password  : <p>{localStorage.getItem('Password')}</p>
+          </div>
+         )}       
+      </div>
+      <div>
+        <button onClick={remove}>Remove</button>
+      </div>
+    </div>
+  )
+}
+
